@@ -12,7 +12,7 @@ public class TextFileReaderTest {
 		
 		TextFileReader tfr = new TextFileReader();
 		
-		tfr.ProduceWordList();
+		tfr.ProduceWordList("wordsEn.txt");
 		
 		assertNotNull(tfr.getWordList());
 		

@@ -17,11 +17,11 @@ public class TextFileReader {
 		wordList = new ArrayList<String>();
 	}
 	
-	public void ProduceWordList()
+	public void ProduceWordList(String fileName)
 	{
 	
 		ClassLoader classLoader = getClass().getClassLoader();
-		URL resource = classLoader.getResource("wordsEn.txt");
+		URL resource = classLoader.getResource(fileName);
 		File file = new File(resource.getFile());
 		try
 		{
