@@ -1,6 +1,4 @@
 package UserInput;
-import java.util.Scanner;
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,79 +8,62 @@ public class UserInput {
 	//fields 
 	String word;
 	String userInput;
-	ArrayList<String> inputWordList;
-	ArrayList<String> inputLetterList;
-	//Scanner sc;
 	
 	public UserInput() 
 	{
-		//sc = new Scanner(System.in);
-		inputWordList = new ArrayList<String>();
-		inputLetterList = new ArrayList<String>();
 	}
 	
-	public String input(String userInput)
+	public Guess validateInput(String userInput)
 	{
-		String response;
+		Guess guess = null;
 		this.userInput = userInput;
-		//userInput = sc.nextLine();
 		
-		Pattern pattern = Pattern.compile("[a-zA-Z0-9]*");
-		Matcher matcher = pattern.matcher(userInput);
-		
-		if (userInput.matches(".*\\d+.*"))
+		if (isAnInt(userInput))
 		{
-			return response = "please do not input any numbers";
+			//Error handle not a number
 		}
-		else if (!matcher.matches())
+		else if (isSpecial(userInput))
 		{
-			return response = "please do not input any special characters";
+			//Error handle not a special
 		}
-		else if (userInput.length() > word.length() || (userInput.length() < word.length() && userInput.length() != 1))
-		{
-			return response = "please input a word that is " + word.length() + " characters in length" ;
-		}
-		else if (userInput.length() == 1) 
-		{
-	    	boolean exists = false;
-			for (String w : inputLetterList) 
-	    	{
-	    		if (w.equals(userInput)) 
-	    		{
-	    			exists = true;
-	    		}
-	    	}
-			if (exists)
-			{
-				return response = "letter has already been used";
+		else {
+			if(userInput.length() > 1) {
+				if(!isMoreThanOneWord(userInput)) {
+					guess = new Word(userInput);
+				}
+				else {
+					//Error don't input more than one word
+				}
+				
 			}
-			else
-			{
-				inputLetterList.add(userInput);
-				return response = "input letter sucessful";
+			else if(userInput.length() == 1) {
+				guess = new Letter(userInput);
+			}
+			else {
+				// Error handle no input
 			}
 		}
-		else 
-		{
-			boolean exists = false;
-			for (String w : inputWordList) 
-	    	{
-	    		if (w.equals(userInput)) 
-	    		{
-	    			exists = true;
-	    		}
-	    	}
-			
-			if (exists)
-			{
-				return response = "word has already been used";
-			}
-			else
-			{
-				inputWordList.add(userInput);
-				return response = "input word sucessful";
-			}
+		return guess;
+	}
+	
+	private boolean isMoreThanOneWord(String input) {
+		String[] inputArray = input.split(" ");
+		if(inputArray.length > 1) {
+			return true;
 		}
+		return false;
+	}
+	
+	private boolean isAnInt(String input) {
+		Pattern digit = Pattern.compile("[0-9]");
+		Matcher hasDigit = digit.matcher(input);
+		return hasDigit.find();
+	}
+	
+	private boolean isSpecial(String input) {
+		Pattern special = Pattern.compile("[!@#$%&*()_+=|<>?{}\\[\\]~-]");
+		Matcher hasSpecial = special.matcher(input);
+		return hasSpecial.find();
 	}
 
 	public String getWord() {
@@ -91,25 +72,6 @@ public class UserInput {
 
 	public void setWord(String word) {
 		this.word = word;
-	}
-
-	public ArrayList<String> getInputWordList() {
-		return inputWordList;
-	}
-
-	public void setInputWordList(ArrayList<String> inputWordList) {
-		this.inputWordList = inputWordList;
-	}
-
-	public ArrayList<String> getInputLetterList() {
-		return inputLetterList;
-	}
-
-	public void setInputLetterList(ArrayList<String> inputLetterList) {
-		this.inputLetterList = inputLetterList;
 	}	
-	
-	
-	
 
 }

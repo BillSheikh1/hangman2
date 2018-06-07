@@ -17,7 +17,7 @@ public class TextFileReader {
 		wordList = new ArrayList<String>();
 	}
 	
-	public void ProduceWordList(String fileName)
+	public void produceWordList(String fileName)
 	{
 	
 		ClassLoader classLoader = getClass().getClassLoader();
